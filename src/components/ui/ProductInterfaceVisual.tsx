@@ -1,0 +1,33 @@
+import type { ProductVisualVariant } from '../../types/product-visual'
+
+type ProductInterfaceVisualProps = {
+  variant: ProductVisualVariant
+  dark?: boolean
+  className?: string
+}
+
+const visualTitles: Record<ProductVisualVariant, string> = {
+  logistics: 'Transport operations',
+  hrms: 'Workforce operations',
+  saas: 'Product administration',
+  workflow: 'Workflow control',
+  integration: 'Integration workspace',
+  reports: 'Operations reporting',
+}
+
+export function ProductInterfaceVisual({ variant, dark = true, className = '' }: ProductInterfaceVisualProps) {
+  const panel = dark ? 'border-white/15 bg-ink text-white' : 'border-border bg-white text-ink'
+  const subtle = dark ? 'border-white/10 bg-white/5 text-white/55' : 'border-border bg-surface text-text-muted'
+  const line = dark ? 'bg-white/15' : 'bg-border'
+
+  const screen = (() => {
+    if (variant === 'logistics') return <div className="mt-4 grid grid-cols-[0.72fr_1.28fr] gap-3"><div className={`border p-3 ${subtle}`}><p className="text-[0.58rem] font-bold uppercase tracking-[0.12em]">Operations</p><div className="mt-4 space-y-2"><span className="block border-l-2 border-brand-red pl-2 text-[0.62rem] text-inherit">Booking</span><span className="block pl-2 text-[0.62rem] text-inherit">Dispatch</span><span className="block pl-2 text-[0.62rem] text-inherit">Delivery</span></div></div><div className={`border p-3 ${subtle}`}><div className="flex items-center justify-between"><span className="text-[0.62rem] font-semibold">Dispatch board</span><span className="h-2 w-2 rounded-full bg-brand-red" /></div><div className="mt-3 space-y-2">{['LR / Bilty', 'Arrival', 'Freight'].map((label, index) => <div className={`flex items-center justify-between border px-2 py-1.5 text-[0.58rem] ${dark ? 'border-white/10 bg-white/5' : 'border-border bg-white'}`} key={label}><span>{label}</span><span className={index === 1 ? 'text-brand-red' : ''}>{index === 1 ? 'Active' : 'Ready'}</span></div>)}</div></div></div>
+    if (variant === 'hrms') return <div className="mt-4 grid grid-cols-[0.85fr_1.15fr] gap-3"><div className={`border p-3 ${subtle}`}><div className="h-7 w-7 rounded-full bg-brand-red/20" /><p className="mt-2 text-[0.62rem] font-semibold">Employee records</p><span className="mt-3 block h-1.5 w-4/5 bg-brand-red/60" /><span className={`mt-2 block h-1.5 w-3/5 ${line}`} /></div><div className={`border p-3 ${subtle}`}><p className="text-[0.62rem] font-semibold">Workforce workspace</p><div className="mt-3 grid grid-cols-2 gap-2">{['Attendance', 'Roster', 'Leave', 'Assets'].map((label, index) => <span className={`min-h-9 border p-2 text-[0.55rem] ${index === 0 ? 'border-brand-red/45 bg-brand-red/10' : dark ? 'border-white/10 bg-white/5' : 'border-border bg-white'}`} key={label}>{label}</span>)}</div></div></div>
+    if (variant === 'saas') return <div className="mt-4 grid grid-cols-[0.64fr_1.36fr] gap-3"><div className={`border p-3 ${subtle}`}><p className="text-[0.58rem] font-bold uppercase tracking-[0.12em]">Admin</p><div className="mt-4 space-y-2 text-[0.6rem]"><span className="block border-l-2 border-brand-red pl-2">Tenants</span><span className="block pl-2">Roles</span><span className="block pl-2">Settings</span></div></div><div className={`border p-3 ${subtle}`}><div className="flex justify-between text-[0.62rem] font-semibold"><span>Tenant configuration</span><span className="text-brand-red">Active</span></div><div className="mt-3 grid grid-cols-2 gap-2"><span className="h-11 border border-brand-red/35 bg-brand-red/10" /><span className={`h-11 border ${dark ? 'border-white/10 bg-white/5' : 'border-border bg-white'}`} /><span className={`col-span-2 h-7 border ${dark ? 'border-white/10 bg-white/5' : 'border-border bg-white'}`} /></div></div></div>
+    if (variant === 'workflow') return <div className="mt-5 flex items-center justify-between gap-2">{['Request', 'Review', 'Approve'].map((label, index) => <div className="flex min-w-0 flex-1 items-center gap-2" key={label}><div className={`grid min-h-15 flex-1 place-items-center border p-2 text-center text-[0.58rem] font-semibold ${index === 1 ? 'border-brand-red/45 bg-brand-red/10 text-brand-red' : subtle}`}>{label}</div>{index < 2 ? <span aria-hidden="true" className="text-brand-red">&rarr;</span> : null}</div>)}</div>
+    if (variant === 'integration') return <div className="mt-4 grid grid-cols-[1fr_auto_1fr] items-center gap-3"><div className={`border p-3 ${subtle}`}><p className="text-[0.6rem] font-semibold">Operations system</p><span className={`mt-3 block h-1.5 w-4/5 ${line}`} /><span className={`mt-2 block h-1.5 w-3/5 ${line}`} /></div><div className="grid h-10 w-10 place-items-center rounded-full border border-brand-red/45 bg-brand-red/10 text-xs text-brand-red">API</div><div className={`border p-3 ${subtle}`}><p className="text-[0.6rem] font-semibold">Accounting system</p><span className={`mt-3 block h-1.5 w-4/5 ${line}`} /><span className={`mt-2 block h-1.5 w-3/5 ${line}`} /></div></div>
+    return <div className="mt-4 grid grid-cols-[0.68fr_1.32fr] gap-3"><div className={`border p-3 ${subtle}`}><p className="text-[0.58rem] font-bold uppercase tracking-[0.12em]">Reports</p><div className="mt-4 space-y-2"><span className="block border-l-2 border-brand-red pl-2 text-[0.6rem]">Operations</span><span className="block pl-2 text-[0.6rem]">Freight</span><span className="block pl-2 text-[0.6rem]">Exceptions</span></div></div><div className={`border p-3 ${subtle}`}><p className="text-[0.62rem] font-semibold">Operational view</p><div className="mt-4 flex h-12 items-end gap-2">{[35, 60, 46, 78, 55, 86].map((height, index) => <span className={index === 3 ? 'flex-1 bg-brand-red' : `flex-1 ${line}`} key={height} style={{ height: `${height}%` }} />)}</div><span className={`mt-4 block h-1.5 w-4/5 ${line}`} /></div></div>
+  })()
+
+  return <div aria-hidden="true" className={`product-interface-visual relative overflow-hidden border p-3 sm:p-4 ${panel} ${className}`}><div className="absolute inset-0 enterprise-grid opacity-30" /><div className="relative"><div className={`flex items-center gap-2 border-b pb-3 ${dark ? 'border-white/10' : 'border-border'}`}><span className="h-2 w-2 rounded-full bg-brand-red" /><span className={`h-2 w-2 rounded-full ${dark ? 'bg-white/25' : 'bg-border'}`} /><span className={`h-2 w-2 rounded-full ${dark ? 'bg-white/25' : 'bg-border'}`} /><span className={`ml-auto text-[0.56rem] font-bold uppercase tracking-[0.12em] ${dark ? 'text-white/45' : 'text-text-muted'}`}>Representative interface</span></div><p className={`mt-3 text-[0.68rem] font-semibold ${dark ? 'text-white/80' : 'text-ink'}`}>{visualTitles[variant]}</p>{screen}</div></div>
+}
